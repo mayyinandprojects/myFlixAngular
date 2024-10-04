@@ -22,6 +22,16 @@ export class FetchApiDataService {
       );
   }
 
+// Making the API call for the user login
+public userLogin(userDetails: any): Observable<any> {
+  console.log(userDetails);
+  return this.http.post(apiUrl + 'login', userDetails)  // Use the 'login' endpoint
+    .pipe(
+      catchError(this.handleError)  // Error handling
+    );
+}
+
+
   // Function to get all movies
   getAllMovies(): Observable<any> {
     const token = localStorage.getItem('token'); // Retrieve token from localStorage
@@ -34,6 +44,21 @@ export class FetchApiDataService {
       catchError(this.handleError) // Error handling
     );
   }
+
+    // Function to get details of one movie
+    getMovie(): Observable<any> {
+      const token = localStorage.getItem('token'); // Retrieve token from localStorage
+      return this.http.get(apiUrl + 'movies' + ':title', {
+        headers: new HttpHeaders({
+          Authorization: 'Bearer ' + token, // Authorization header with Bearer token
+        })
+      }).pipe(
+        map((res: any) => this.extractResponseData(res)), // Adjusted response type
+        catchError(this.handleError) // Error handling
+      );
+    }
+
+
 
   // Non-typed response extraction
   private extractResponseData(res: any): any {  // Changed type from Response to any
