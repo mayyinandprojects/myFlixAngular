@@ -1,80 +1,62 @@
 import { Injectable } from '@angular/core';
-import { catchError, map } from 'rxjs/operators';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
-// Declaring the API URL that will provide data for the client app
+//Declaring the api url that will provide data for the client app
 const apiUrl = 'https://movie-api-4o5a.onrender.com/';
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class FetchApiDataService {
-
-  constructor(private http: HttpClient) { }
-
-  // Making the API call for the user registration endpoint
+export class FetchApiDataService  {
+  // Inject the HttpClient module to the constructor params
+  // This will provide HttpClient to the entire class, making it available via this.http
+  constructor(private http: HttpClient) {}
+  // Making the api call for the user registration endpoint
   public userRegistration(userDetails: any): Observable<any> {
     console.log(userDetails);
-    return this.http.post(apiUrl + 'users', userDetails)
-      .pipe(
-        catchError(this.handleError) // Error handling
-      );
+    return this.http
+      .post(apiUrl + 'users', userDetails)
+      .pipe(catchError(this.handleError));
   }
 
-// Making the API call for the user login
-public userLogin(userDetails: any): Observable<any> {
-  console.log(userDetails);
-  return this.http.post(apiUrl + 'login', userDetails)  // Use the 'login' endpoint
-    .pipe(
-      catchError(this.handleError)  // Error handling
-    );
-}
-
-
-  // Function to get all movies
-  getAllMovies(): Observable<any> {
-    const token = localStorage.getItem('token'); // Retrieve token from localStorage
-    return this.http.get(apiUrl + 'movies', {
+  getAllMovies(): Observable<any[]> {
+    const token = localStorage.getItem('token');
+    return this.http.get<any[]>(apiUrl + 'movies', {
       headers: new HttpHeaders({
-        Authorization: 'Bearer ' + token, // Authorization header with Bearer token
+        Authorization: 'Bearer ' + token
       })
-    }).pipe(
-      map((res: any) => this.extractResponseData(res)), // Adjusted response type
-      catchError(this.handleError) // Error handling
+    })
+    .pipe(
+      map(this.extractResponseData), 
+      catchError(this.handleError)
     );
   }
-
-    // Function to get details of one movie
-    getMovie(): Observable<any> {
-      const token = localStorage.getItem('token'); // Retrieve token from localStorage
-      return this.http.get(apiUrl + 'movies' + ':title', {
-        headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token, // Authorization header with Bearer token
-        })
-      }).pipe(
-        map((res: any) => this.extractResponseData(res)), // Adjusted response type
-        catchError(this.handleError) // Error handling
-      );
-    }
-
-
-
+  
+  
   // Non-typed response extraction
-  private extractResponseData(res: any): any {  // Changed type from Response to any
-    return res || {};  // Return body or empty object
+  // private extractResponseData(res: Response): any {
+    private extractResponseData(res: any): any { 
+    const body = res;
+    return body || {};
   }
 
-  // Error handling function
-  private handleError(error: HttpErrorResponse): any {
+  private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
+      console.error('Some error occurred:', error.error.message);
     } else {
       console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`
-      );
+        `Error Status code ${error.status}, ` +
+        `Error body is: ${error.error}`);
     }
-    return throwError(() => new Error('Something went wrong; please try again later.'));
+    // Instead of throwError, return an observable with an error message
+    return new Observable<never>(subscriber => {
+      subscriber.error('Something bad happened; please try again later.');
+    });
   }
+  
 }

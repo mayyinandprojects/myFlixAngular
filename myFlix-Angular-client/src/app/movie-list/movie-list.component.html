@@ -1,1 +1,10 @@
-<p>movie-list works!</p>
+<div>
+  <h2>Movie List</h2>
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+  <ul>
+    <li *ngFor="let movie of movies">
+      {{ movie.title }} ({{ movie.releaseDate }})
+    </li>
+    <!-- Adjust according to your data structure -->
+  </ul>
+</div>

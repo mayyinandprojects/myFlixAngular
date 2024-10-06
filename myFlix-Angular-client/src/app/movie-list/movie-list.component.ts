@@ -1,29 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { FetchApiDataService } from '../fetch-api-data.service'; // Import your service
+import { FetchApiDataService } from '../fetch-api-data.service';
 
 @Component({
   selector: 'app-movie-list',
   templateUrl: './movie-list.component.html',
-  styleUrls: ['./movie-list.component.scss']
+  // styleUrls: ['./movie-list.component.css']
 })
 export class MovieListComponent implements OnInit {
+  movies: any[] = [];
+  errorMessage: string = ''; // Declare the errorMessage property here
 
-  movies: any[] = [];  // Store movies here
-
-  constructor(private fetchApiData: FetchApiDataService) { }  // Inject the service
+  constructor(private fetchApiData: FetchApiDataService) {}
 
   ngOnInit(): void {
-    this.getMovies();  // Call getMovies() when the component is initialized
+    this.getMovies();
   }
 
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe(
-      (response: any) => {
-        this.movies = response;  // Store the movie data in the movies array
-        console.log(this.movies);  // Log movies to console to verify
+      (data: any) => {
+        this.movies = data;
+        console.log('Movies:', this.movies);
       },
       (error: any) => {
-        console.error(error);  // Log any error to console
+        console.error('Error fetching movies:', error);
+        this.errorMessage = 'Error fetching movies: ' + error; // Set error message here
       }
     );
   }
