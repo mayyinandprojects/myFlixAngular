@@ -7,10 +7,30 @@
 </head>
 <body>
   <main>
-    <div class="container">
-      <app-movie-list></app-movie-list>
-    </div>
+    <!-- <div class="container">
+      <app-user-registration-form></app-user-registration-form>
+
+    </div> -->
     <!-- <router-outlet></router-outlet> -->
+    <div class="main-page">
+      <h1>
+        Welcome to myFlix!
+      </h1>
+      <button
+        mat-raised-button
+        (click)="openUserRegistrationDialog()"
+        style="margin-right: 10px;"
+        color="primary"
+      >
+        Sign Up
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+      >
+        Login
+      </button>
+    </div>
     
   </main>
   
