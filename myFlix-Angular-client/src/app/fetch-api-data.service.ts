@@ -20,7 +20,7 @@ export class FetchApiDataService  {
   public userRegistration(userDetails: any): Observable<any> {
     console.log(userDetails);
     return this.http
-      .post(apiUrl + 'users', userDetails)
+      .post(apiUrl + 'user', userDetails)
       .pipe(catchError(this.handleError));
   }
 
