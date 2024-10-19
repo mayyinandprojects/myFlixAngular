@@ -1,3 +1,52 @@
-img{
-    width: 350px;
+/* src/app/movie-card/movie-card.component.scss */
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+.movie-card {
+  width: 100%;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+}
+
+.image-container {
+  position: relative; /* Needed for positioning the heart icon inside */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Style for the heart icon */
+.favorite-icon {
+  position: absolute;
+  bottom: 10px; /* Position it slightly away from the bottom */
+  right: 10px; /* Position it slightly away from the right */
+  font-size: 24px; /* Adjust size of the heart */
+  color: red; /* Change the color of the heart icon if desired */
+  cursor: pointer; /* Change the cursor to a pointer for better UX */
+  border-radius: 50%; /* Make the background circular */
+  padding: 5px; /* Add some padding for the circular effect */
+}
+
+mat-card-title {
+  font-weight: bold;
+}
+
+mat-card-subtitle {
+  font-size: 14px;
+  color: gray;
+}
+
+mat-card-actions {
+  display: flex;
+  display: table-row;
 }
