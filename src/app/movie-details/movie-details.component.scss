@@ -1,0 +1,33 @@
+.movie-details-container {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  .movie-image {
+    flex: 1;
+  }
+  
+  .movie-image img {
+    max-width: 100%; /* Restrict the image width to 100% of its container */
+    height: auto; /* Keep the aspect ratio intact */
+    border-radius: 10px;
+  }
+  
+  .movie-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .movie-info h2 {
+    margin-bottom: 20px;
+  }
+  
+  .movie-info p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
