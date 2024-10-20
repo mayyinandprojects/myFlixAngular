@@ -1,1 +1,25 @@
-<router-outlet></router-outlet>
+<!-- src/app/app.component.html -->
+<mat-toolbar *ngIf="isLoggedIn()" color="primary" class="navbar">
+    <!-- Logo or Home Button -->
+    <button mat-button (click)="goToMovies()" class="navbar-logo">
+      <img src="assets/logo.png" alt="MyFlix Logo" class="logo-image" />
+     
+    </button>
+  
+    <!-- Spacer to push Profile/Logout to the right -->
+    <span class="spacer"></span>
+  
+    <!-- Profile Button -->
+    <button mat-button (click)="goToProfile()" color="accent">
+      Profile
+    </button>
+  
+    <!-- Logout Button -->
+    <button mat-button (click)="logout()" color="warn">
+      Logout
+    </button>
+  </mat-toolbar>
+  
+  <!-- Include router outlet so views change based on route -->
+  <router-outlet></router-outlet>
+  
