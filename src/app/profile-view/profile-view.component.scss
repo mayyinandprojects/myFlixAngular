@@ -1,0 +1,105 @@
+// src\app\profile-view\profile-view.component.scss
+
+.profile-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding: 20px;
+
+  /* Left Side: User Info */
+  .user-info {
+    flex: 1;
+    padding-right: 20px;
+    border-right: 1px solid #ddd;
+    
+    /* Ensure each line of user info is block level and spaced */
+    p {
+      margin: 10px 0; /* Adds space between the name, email, etc. */
+    }
+  }
+
+  /* Right Side: Profile Form */
+  .profile-form {
+    flex: 2;
+    padding-left: 20px;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    /* Create a container for the button */
+    .button-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+  }
+}
+
+.favorite-movie-list {
+  margin-top: 30px; /* Space above the favorite movies section */
+  
+  h2 {
+    margin-bottom: 20px;
+    text-align: center; /* Center the heading */
+  }
+
+  .movies-grid {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    justify-content: center; /* Center the movie cards */
+    gap: 20px; /* Space between cards */
+  }
+
+  .movie-card {
+    width: 200px; /* Fixed width for movie cards */
+    border: 1px solid #ddd; /* Light border around the card */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Prevents overflow */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.2s; /* Smooth transition for hover effect */
+    text-align: center; /* Center text in card */
+  
+    /* Image styles */
+    img {
+      max-width: 100%; /* Don't exceed the card width */
+      height: 300px; /* Fixed height for consistent card sizes */
+      object-fit: cover; /* Crop image to fit within the fixed height and width */
+      border-bottom: 1px solid #ddd; /* Divider line under the image */
+    }
+  
+    /* Card content */
+    mat-card-title, mat-card-subtitle {
+      padding: 10px; /* Padding around the title and subtitle */
+    }
+  
+    p {
+      padding: 0 10px 10px; /* Padding for description */
+      font-size: 14px; /* Adjust font size */
+      line-height: 1.4; /* Better readability */
+    }
+  
+    /* Hover effect */
+    &:hover {
+      transform: scale(1.05); /* Slightly enlarge the card on hover */
+    }
+  }
+  
+  
+}
+
+
+.delete-account-container {
+  display: flex;
+  align-items: center; 
+  justify-content: space-between;
+  margin-top: 20px;
+
+  h2 {
+    margin: 0; 
+  }
+
+  .button-container {
+    margin-left: auto; /* Pushes the button to the right */
+  }
+}

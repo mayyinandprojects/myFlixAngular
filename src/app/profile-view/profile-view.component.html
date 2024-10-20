@@ -1,0 +1,87 @@
+<!-- \src\app\profile-view\profile-view.component.html -->
+<div class="profile-container">
+  <!-- Left Side: User Info -->
+  <div class="user-info">
+    <h2>User Info</h2>
+    <p><strong>Name:</strong> {{ userInfo.name }}</p>
+    <p><strong>Email:</strong> {{ userInfo.email }}</p>
+  </div>
+
+  <!-- Right Side: Update Profile Form -->
+  <div class="profile-form">
+    <h2>Update Profile</h2>
+    <form>
+      <!-- Name Input -->
+      <mat-form-field>
+        <input matInput [(ngModel)]="updatedUserInfo.name" name="name" placeholder="{{ userInfo.name }}" [disabled]="!isEditing">
+      </mat-form-field>
+
+      <!-- Username Input -->
+      <mat-form-field>
+        <input matInput [(ngModel)]="updatedUserInfo.username" name="username" placeholder="{{ userInfo.username }}" [disabled]="!isEditing">
+      </mat-form-field>
+
+      <!-- Email Input -->
+      <mat-form-field>
+        <input matInput [(ngModel)]="updatedUserInfo.email" name="email" placeholder="{{ userInfo.email }}" [disabled]="!isEditing">
+      </mat-form-field>
+
+      <!-- Birthday Input -->
+      <mat-form-field>
+        <input matInput [(ngModel)]="updatedUserInfo.birthday" name="birthday" placeholder="dd/MM/yyyy" type="date" [disabled]="!isEditing">
+      </mat-form-field>
+
+      <!-- Save/Edit Button -->
+      <div class="button-container">
+        <button mat-raised-button color="primary" (click)="isEditing ? saveProfile() : toggleEdit()">
+          {{ isEditing ? 'Save' : 'Edit Profile' }}
+        </button>
+      </div>
+    </form>
+    <hr/>
+        <div class="delete-account-container">
+      <h2>Delete Account</h2>
+      <div class="button-container">
+        <button mat-raised-button color="primary">Delete Account</button>
+      </div>
+    </div>
+    
+  </div>
+  
+
+</div>
+<hr/>
+<div class="favorite-movie-list">
+<div class="movies-grid">
+  <div *ngFor="let movie of favoriteMovies" class="movie-card">
+    <!-- Movie Image -->
+    <img [src]="movie?.imageurl || 'assets/placeholder.jpg'" alt="{{ movie?.title }}" />
+
+    <!-- Movie Title -->
+    <div class="movie-title">
+      <mat-card-title>{{ movie?.title }}</mat-card-title>
+      
+      <!-- Heart Icon -->
+      <button mat-icon-button (click)="toggleFavorite(movie)">
+        <mat-icon [color]="isFavorite(movie) ? 'warn' : 'default'">
+          {{ isFavorite(movie) ? 'favorite' : 'favorite_border' }}
+        </mat-icon>
+      </button>
+    </div>
+
+    <!-- Movie Director -->
+    <mat-card-subtitle *ngIf="movie?.directors?.length > 0">
+      Directed by: {{ movie?.directors[0]?.name }}
+    </mat-card-subtitle>
+
+
+    <!-- Actors (Check if actors array exists and display as a comma-separated list) -->
+    <p *ngIf="movie?.actors?.length > 0">
+      Starring: {{ movie?.actors.join(', ') }}
+    </p>
+  </div>
+</div>
+</div>
+
+
+
