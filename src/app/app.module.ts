@@ -19,6 +19,11 @@ import { MovieCardComponent } from './movie-card/movie-card.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { ProfileViewComponent } from './profile-view/profile-view.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
@@ -34,6 +39,9 @@ const appRoutes: Routes = [
     UserLoginFormComponent,
     MovieCardComponent,
     WelcomePageComponent,
+    MovieDetailsComponent,
+    ProfileViewComponent,
+    ConfirmDialogComponent,
   ],
   imports: [ 
     RouterModule.forRoot(appRoutes),
@@ -48,7 +56,9 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
