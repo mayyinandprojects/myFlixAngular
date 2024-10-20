@@ -4,6 +4,9 @@ import { ActivatedRoute } from '@angular/router'; // To capture route params
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { formatDate } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router'; // For navigation
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component'; // Import dialog
 
 @Component({
   selector: 'app-profile-view',
@@ -19,8 +22,9 @@ export class ProfileViewComponent implements OnInit {
 
   constructor(
     private fetchApiData: FetchApiDataService,
-    private router: ActivatedRoute, // Inject ActivatedRoute to access route params
-    private snackBar: MatSnackBar
+    private router: Router, // Inject ActivatedRoute to access route params
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog 
   ) {}
 
   ngOnInit(): void {
@@ -142,22 +146,87 @@ isFavorite(movie: any): boolean {
   return this.userInfo.favorite_movies.includes(movie._id);
 }
 
+
 // Toggle the favorite status of the movie
 toggleFavorite(movie: any): void {
   const isFav = this.isFavorite(movie);
-  
+
+  // Ensure username is available
+  if (!this.userInfo.username) {
+    console.error('Username not available');
+    return;
+  }
+
   // Call the API to add/remove from favorites
   if (isFav) {
-    this.fetchApiData.removeFavoriteMovie(this.userInfo._id, movie._id).subscribe((response: any) => {
-      console.log(`${movie.title} removed from favorites`);
-      this.userInfo.favorite_movies = this.userInfo.favorite_movies.filter((id: string) => id !== movie._id);
-    });
+    // If it's already a favorite, remove it
+    this.fetchApiData.removeFavoriteMovie(this.userInfo.username, movie._id).subscribe(
+      (response: any) => {
+        console.log(`${movie.title} removed from favorites`);
+        // Update local state by removing the movie ID
+        this.userInfo.favorite_movies = this.userInfo.favorite_movies.filter(
+          (id: string) => id !== movie._id
+        );
+        // Update the favoriteMovies array
+        this.favoriteMovies = this.favoriteMovies.filter(
+          (favMovie) => favMovie._id !== movie._id
+        );
+      },
+      (error) => {
+        console.error('Error removing favorite movie:', error);
+      }
+    );
   } else {
-    this.fetchApiData.addFavoriteMovie(this.userInfo._id,movie._id).subscribe((response: any) => {
-      console.log(`${movie.title} added to favorites`);
-      this.userInfo.favorite_movies.push(movie._id);
-    });
+    // If it's not a favorite, add it
+    this.fetchApiData.addFavoriteMovie(this.userInfo.username, movie._id).subscribe(
+      (response: any) => {
+        console.log(`${movie.title} added to favorites`);
+        // Add the movie ID to the local favorite_movies array
+        this.userInfo.favorite_movies.push(movie._id);
+        // Add the movie to the favoriteMovies array
+        this.favoriteMovies.push(movie);
+      },
+      (error) => {
+        console.error('Error adding favorite movie:', error);
+      }
+    );
   }
 }
+
+// Open the confirmation dialog and delete account if confirmed
+deleteAccount(): void {
+  const dialogRef = this.dialog.open(ConfirmDialogComponent);
+
+  dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+          console.log('User confirmed deletion. Proceeding to delete account.');
+          this.fetchApiData.deleteUser(this.userInfo.username).subscribe(
+              (response) => {
+                  console.log('Delete account response:', response); // Log the response from the delete operation
+                  this.snackBar.open('Account deleted successfully', 'OK', { duration: 2000 });
+                  this.logoutAndRedirect(); // Logout and redirect user after deletion
+              },
+              (error) => {
+                  console.error('Error deleting account:', error); // Log any errors that occur
+                  this.snackBar.open('Error deleting account: ' + error, 'OK', { duration: 2000 });
+              }
+          );
+      }
+  });
+}
+
+
+
+
+
+
+
+// Logout user and redirect to welcome screen
+logoutAndRedirect(): void {
+  localStorage.clear(); // Clear any user data
+  this.router.navigate(['/welcome']); // Redirect to welcome screen
+}
+
+
 
 }

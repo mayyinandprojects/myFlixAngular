@@ -39,12 +39,14 @@
       </div>
     </form>
     <hr/>
-        <div class="delete-account-container">
-      <h2>Delete Account</h2>
-      <div class="button-container">
-        <button mat-raised-button color="primary">Delete Account</button>
-      </div>
-    </div>
+ <!-- Delete Account Section -->
+<div class="delete-account-container">
+  <h2>Delete Account</h2>
+  <div class="button-container">
+    <button mat-raised-button color="warn" (click)="deleteAccount()">Delete Account</button>
+  </div>
+</div>
+
     
   </div>
   
@@ -55,28 +57,28 @@
 <div class="movies-grid">
   <div *ngFor="let movie of favoriteMovies" class="movie-card">
     <div class="image-container">
-    <!-- Movie Image -->
-    <img [src]="movie?.imageurl || 'assets/placeholder.jpg'" alt="{{ movie?.title }}" />
-    <mat-icon [color]="isFavorite(movie) ? 'warn' : 'default'">
-      {{ isFavorite(movie) ? 'favorite' : 'favorite_border' }}
-    </mat-icon>
-  </div>
+      <!-- Movie Image -->
+      <img [src]="movie?.imageurl || 'assets/placeholder.jpg'" alt="{{ movie?.title }}" />
+
+    </div>
     <!-- Movie Title -->
     <div class="movie-title">
       <mat-card-title>{{ movie?.title }}</mat-card-title>
       
-      <!-- Heart Icon -->
+      <!-- Heart Icon Button -->
       <button mat-icon-button (click)="toggleFavorite(movie)">
-
+        <mat-icon [color]="isFavorite(movie) ? 'warn' : 'default'">
+          {{ isFavorite(movie) ? 'favorite' : 'favorite_border' }}
+        </mat-icon>
       </button>
     </div>
-
+  
     <!-- Movie Director -->
     <mat-card-subtitle *ngIf="movie?.directors?.length > 0">
       Directed by: {{ movie?.directors[0]?.name }}
     </mat-card-subtitle>
-
   </div>
+  
 </div>
 </div>
 
