@@ -15,38 +15,45 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-user-login-form',
   templateUrl: './user-login-form.component.html',
-  styleUrls: ['./user-login-form.component.scss']
+  styleUrls: ['./user-login-form.component.scss'],
 })
 export class UserLoginFormComponent implements OnInit {
-
   @Input() userData = { Username: '', Password: '' };
+  isLoading = false;
 
-constructor(
+  constructor(
     public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
     public snackBar: MatSnackBar,
     private router: Router
-    ) { }
-    
+  ) {}
 
-ngOnInit(): void {
-}
+  ngOnInit(): void {}
 
-// This is the function responsible for sending the form inputs to the backend
-loginUser(): void {
-    this.fetchApiData.userLogin(this.userData.Username, this.userData.Password).subscribe((result) => {
-  // Logic for a successful user login goes here! 
-    localStorage.setItem('user',result.user.Username);
-    localStorage.setItem('token',result.token);
-     this.dialogRef.close(); // This will close the modal on success!
-     this.snackBar.open(result, 'OK', {
-        duration: 2000
-     });
-     this.router.navigate(['movies']);
-    }, (result) => {
-      this.snackBar.open(result, 'OK', {
-        duration: 2000
-      });
-    });
+  
+
+  // This is the function responsible for sending the form inputs to the backend
+  loginUser(): void {
+    this.isLoading = true; // Start loading spinner
+    this.fetchApiData
+      .userLogin(this.userData.Username, this.userData.Password)
+      .subscribe(
+        (result) => {
+          // Logic for a successful user login goes here!
+          localStorage.setItem('userId', result.user._id);      
+          localStorage.setItem('token', result.token);
+          this.dialogRef.close(); // This will close the modal on success!
+          this.snackBar.open(result, 'OK', {
+            duration: 2000,
+          });
+          this.router.navigate(['movies']);
+        },
+        (result) => {
+          this.snackBar.open(result, 'OK', {
+            duration: 2000,
+          });
+          this.isLoading = false;
+        }
+      );
   }
 }

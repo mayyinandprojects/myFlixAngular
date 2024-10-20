@@ -1,40 +1,42 @@
 <!-- src/app/user-registration-form/user-login-form.component.html -->
 <mat-card>
-    <mat-card-header>
-      <mat-card-title>Login</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form>
-        <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userData.Username"
-            placeholder="Username"
-            type="text"
-            name="Username"
-            required
-          >
-          </mat-form-field>
-          <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userData.Password"
-            type = "password"
-            placeholder="Password"
-            name="Password"
-            required
-          >
-        </mat-form-field>
-      </form>
-    </mat-card-content>
-    <mat-card-actions>
-        <button
-          mat-raised-button
-          (click)="loginUser()"
-          color="primary"
-          class="button-confirmation"
-        >
-          Login
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form (ngSubmit)="loginUser()">
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="userData.Username"
+          placeholder="Username"
+          type="text"
+          name="Username"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="userData.Password"
+          type="password"
+          placeholder="Password"
+          name="Password"
+          required
+        />
+      </mat-form-field>
+
+      <mat-card-actions>
+        <!-- Spinner added to the button -->
+        <button mat-raised-button color="primary" class="button-confirmation" type="submit" [disabled]="isLoading">
+          <!-- Show spinner if isLoading is true -->
+          <mat-spinner *ngIf="isLoading" [diameter]="24" mode="indeterminate"></mat-spinner>
+          <!-- Otherwise show 'Login' text -->
+          <span *ngIf="!isLoading">Login</span>
         </button>
-    </mat-card-actions>
-  </mat-card>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>
