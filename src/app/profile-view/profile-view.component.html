@@ -54,18 +54,20 @@
 <div class="favorite-movie-list">
 <div class="movies-grid">
   <div *ngFor="let movie of favoriteMovies" class="movie-card">
+    <div class="image-container">
     <!-- Movie Image -->
     <img [src]="movie?.imageurl || 'assets/placeholder.jpg'" alt="{{ movie?.title }}" />
-
+    <mat-icon [color]="isFavorite(movie) ? 'warn' : 'default'">
+      {{ isFavorite(movie) ? 'favorite' : 'favorite_border' }}
+    </mat-icon>
+  </div>
     <!-- Movie Title -->
     <div class="movie-title">
       <mat-card-title>{{ movie?.title }}</mat-card-title>
       
       <!-- Heart Icon -->
       <button mat-icon-button (click)="toggleFavorite(movie)">
-        <mat-icon [color]="isFavorite(movie) ? 'warn' : 'default'">
-          {{ isFavorite(movie) ? 'favorite' : 'favorite_border' }}
-        </mat-icon>
+
       </button>
     </div>
 
@@ -74,11 +76,6 @@
       Directed by: {{ movie?.directors[0]?.name }}
     </mat-card-subtitle>
 
-
-    <!-- Actors (Check if actors array exists and display as a comma-separated list) -->
-    <p *ngIf="movie?.actors?.length > 0">
-      Starring: {{ movie?.actors.join(', ') }}
-    </p>
   </div>
 </div>
 </div>

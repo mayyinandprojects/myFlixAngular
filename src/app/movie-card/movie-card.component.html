@@ -1,14 +1,17 @@
 <!-- src/app/movie-card/movie-card.component.html -->
 <div class="movies-grid">
   <mat-card *ngFor="let movie of movies" class="movie-card">
-    <div class="image-container">
+    <div class="image-container" (click)="goToMovieDetails(movie.title)">
       <img [src]="movie.imageurl" [alt]="movie.title" />
-      <mat-icon class="favorite-icon">favorite_border</mat-icon>
+      <mat-icon
+        class="favorite-icon"
+        [ngClass]="{ 'favorite': isFavorite(movie._id) }"
+        (click)="toggleFavorite(movie._id); $event.stopPropagation();">
+        {{ isFavorite(movie._id) ? 'favorite' : 'favorite_border' }}
+      </mat-icon>
     </div>
-
-    <mat-card-actions>
+    <mat-card-actions (click)="goToMovieDetails(movie.title)">
       <mat-card-title>{{ movie.title }}</mat-card-title>
-
       <mat-card-subtitle>
         Directed by:
         <span *ngFor="let director of movie.directors; let i = index">
@@ -18,3 +21,4 @@
     </mat-card-actions>
   </mat-card>
 </div>
+

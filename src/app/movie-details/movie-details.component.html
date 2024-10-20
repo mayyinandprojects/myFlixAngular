@@ -1,1 +1,42 @@
-<p>movie-details works!</p>
+<!-- src/app/movie-details/movie-details.component.html -->
+<!-- <div *ngIf="!movie">Loading movie details...</div>
+<div *ngIf="movie"> -->
+    <div class="movie-details-container">
+        <!-- Movie Image -->
+        <div class="movie-image">
+          <img [src]="movie.imageurl" alt="{{ movie.title }}" />
+        </div>
+      
+        <!-- Movie Details -->
+        <div class="movie-info">
+          <h2>{{ movie.title }}</h2>
+          <p>{{ movie.description }}</p>
+      
+          <div>
+            <h3>Director(s):</h3>
+            <ul>
+              <li *ngFor="let director of movie.directors">
+                {{ director.name }}
+              </li>
+            </ul>
+          </div>
+      
+          <!-- Access the genre name directly -->
+          <div>
+            <h3>Genre:</h3>
+            <p>{{ movie.genre.name }}</p>
+          </div>
+      
+          <!-- Actors are an array of strings, so loop through them -->
+          <div>
+            <h3>Actors:</h3>
+            <ul>
+              <li *ngFor="let actor of movie.actors">
+                {{ actor }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+  

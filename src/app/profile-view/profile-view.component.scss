@@ -52,41 +52,75 @@
   }
 
   .movie-card {
-    width: 200px; /* Fixed width for movie cards */
+    width: 100%;
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 8px;
     border: 1px solid #ddd; /* Light border around the card */
-    border-radius: 10px; /* Rounded corners */
-    overflow: hidden; /* Prevents overflow */
+    overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     transition: transform 0.2s; /* Smooth transition for hover effect */
     text-align: center; /* Center text in card */
-  
+
+    &:hover {
+      transform: scale(1.05); /* Slightly enlarge the card on hover */
+      cursor: pointer;
+    }
+
+    /* Image container for positioning the favorite icon */
+    .image-container {
+      position: relative; /* Needed for positioning the heart icon */
+    }
+
     /* Image styles */
     img {
       max-width: 100%; /* Don't exceed the card width */
       height: 300px; /* Fixed height for consistent card sizes */
-      object-fit: cover; /* Crop image to fit within the fixed height and width */
       border-bottom: 1px solid #ddd; /* Divider line under the image */
+      border-radius: 8px;
     }
-  
-    /* Card content */
-    mat-card-title, mat-card-subtitle {
-      padding: 10px; /* Padding around the title and subtitle */
+
+    /* Favorite icon (heart) styling */
+    .favorite-icon {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: gray;
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      padding: 5px;
     }
-  
+
+    .favorite-icon.favorite {
+      color: red; /* Change to red if it's a favorite */
+    }
+
+    /* Card content (Title and Subtitle) */
+    mat-card-title {
+      font-weight: bold;
+      font-size: 18px; /* Make the title bigger */
+      padding: 10px; /* Padding around the title */
+    }
+
+    mat-card-subtitle {
+      font-size: 14px;
+      color: gray;
+      padding: 5px; /* Padding around the subtitle */
+    }
+
     p {
       padding: 0 10px 10px; /* Padding for description */
       font-size: 14px; /* Adjust font size */
       line-height: 1.4; /* Better readability */
     }
-  
-    /* Hover effect */
-    &:hover {
-      transform: scale(1.05); /* Slightly enlarge the card on hover */
-    }
   }
-  
-  
 }
+
+
 
 
 .delete-account-container {
