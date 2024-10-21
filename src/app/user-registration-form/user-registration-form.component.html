@@ -1,68 +1,79 @@
 <!-- src/app/user-registration-form/user-registration-form.component.html -->
 <mat-card>
-    <mat-card-header>
-      <mat-card-title>Sign Up!</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form>
-        <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userData.name"
-            placeholder="name"
-            type="text"
-            name="name"
-            required
-          >
-          </mat-form-field>
-        <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userData.username"
-            placeholder="Username"
-            type="text"
-            name="Username"
-            required
-          >
-          </mat-form-field>
-          <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userData.password"
-            type = "password"
-            placeholder="Password"
-            name="Password"
-            required
-          >
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userData.email"
-            type = "email"
-            placeholder="Email"
-            name="Email"
-            required
-          >
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userData.birthday"
-            type = "date"
-            placeholder="Birthday"  
-            name="Birthday"
-          >
-        </mat-form-field>
-      </form>
-    </mat-card-content>
-    <mat-card-actions>
+  <mat-card-header>
+    <mat-card-title>Sign Up!</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form (ngSubmit)="registerUser()">
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="userData.name"
+          placeholder="name"
+          type="text"
+          name="name"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="userData.username"
+          placeholder="Username"
+          type="text"
+          name="Username"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="userData.password"
+          type="password"
+          placeholder="Password"
+          name="Password"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="userData.email"
+          type="email"
+          placeholder="Email"
+          name="Email"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="userData.birthday"
+          type="date"
+          placeholder="Birthday"
+          name="Birthday"
+        />
+      </mat-form-field>
+
+      <mat-card-actions>
+        <!-- Spinner added to the button -->
         <button
           mat-raised-button
-          (click)="registerUser()"
           color="primary"
+          class="button-confirmation"
+          type="submit"
+          [disabled]="isLoading"
         >
-          Sign Up
+          <!-- Show spinner if isLoading is true -->
+          <mat-spinner
+            *ngIf="isLoading"
+            [diameter]="24"
+            mode="indeterminate"
+          ></mat-spinner>
+          <!-- Otherwise show 'Register' text -->
+          <span *ngIf="!isLoading">Register</span>
         </button>
-    </mat-card-actions>
-  </mat-card>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>
