@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
-  styleUrls: ['./movie-card.component.scss']
+  styleUrls: ['./movie-card.component.scss'],
 })
 export class MovieCardComponent implements OnInit {
   movies: any[] = [];
@@ -62,21 +62,31 @@ export class MovieCardComponent implements OnInit {
 
   // Add a movie to favorites
   addToFavorites(movieId: string): void {
-    if (this.username) {  // Make sure the username is available
-      this.fetchApiData.addFavoriteMovie(this.username, movieId).subscribe(() => {
-        this.favoriteMovies.push(movieId); // Update local favoriteMovies array
-        this.snackBar.open('Added to favorites!', 'OK', { duration: 2000 });
-      });
+    if (this.username) {
+      // Make sure the username is available
+      this.fetchApiData
+        .addFavoriteMovie(this.username, movieId)
+        .subscribe(() => {
+          this.favoriteMovies.push(movieId); // Update local favoriteMovies array
+          this.snackBar.open('Added to favorites!', 'OK', { duration: 2000 });
+        });
     }
   }
 
   // Remove a movie from favorites
   removeFromFavorites(movieId: string): void {
-    if (this.username) {  // Make sure the username is available
-      this.fetchApiData.removeFavoriteMovie(this.username, movieId).subscribe(() => {
-        this.favoriteMovies = this.favoriteMovies.filter(id => id !== movieId); // Remove from local array
-        this.snackBar.open('Removed from favorites!', 'OK', { duration: 2000 });
-      });
+    if (this.username) {
+      // Make sure the username is available
+      this.fetchApiData
+        .removeFavoriteMovie(this.username, movieId)
+        .subscribe(() => {
+          this.favoriteMovies = this.favoriteMovies.filter(
+            (id) => id !== movieId
+          ); // Remove from local array
+          this.snackBar.open('Removed from favorites!', 'OK', {
+            duration: 2000,
+          });
+        });
     }
   }
 

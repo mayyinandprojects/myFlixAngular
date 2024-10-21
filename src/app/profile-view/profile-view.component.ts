@@ -51,17 +51,6 @@ export class ProfileViewComponent implements OnInit {
     });
   }
 
-  // getFavoriteMovies(movieIds: string[]): void {
-  //   this.favoriteMovies = [];
-  //   movieIds.forEach(id => {
-  //     this.fetchApiData.getMovie(id).subscribe((movie: any) => {
-  //       this.favoriteMovies.push(movie);
-  //       console.log(movie);
-  //     }, error => {
-  //       console.error('Error fetching favorite movie:', error);
-  //     });
-  //   });
-  // }
 
   getAllMoviesAndFavorites(movieIds: string[]): void {
     this.favoriteMovies = []; // Reset favorite movies
@@ -93,25 +82,6 @@ export class ProfileViewComponent implements OnInit {
     return parsedDate.toISOString().substring(0, 10); // YYYY-MM-DD format for input[type="date"]
   }
 
-  // Save the updated profile (same as before)
-  // saveProfile(): void {
-  //   if (this.userId) {
-  //     this.fetchApiData.editUser(this.userId, this.updatedUserInfo).subscribe(
-  //       (response: any) => {
-  //         this.snackBar.open('Profile updated successfully', 'OK', {
-  //           duration: 2000,
-  //         });
-  //         this.userInfo = { ...this.updatedUserInfo }; // Update displayed user info
-  //         this.isEditing = false;
-  //       },
-  //       (error) => {
-  //         this.snackBar.open('Error updating profile', 'OK', {
-  //           duration: 2000,
-  //         });
-  //       }
-  //     );
-  //   }
-  // }
 
   saveProfile(): void {
     if (this.userInfo && this.userInfo.username) {
@@ -201,7 +171,7 @@ export class ProfileViewComponent implements OnInit {
   // Open the confirmation dialog and delete account if confirmed
   deleteAccount(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
-  
+
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         console.log('User confirmed deletion. Proceeding to delete account.');
@@ -209,16 +179,20 @@ export class ProfileViewComponent implements OnInit {
           (response: any) => {
             // Log the entire response for debugging purposes
             console.log('API response:', response);
-  
+
             // Check if the response contains meaningful data
             if (response && Object.keys(response).length > 0) {
               console.log('Account deleted successfully:', response);
             } else {
-              console.log('Response is empty, but status 200. Proceeding with logout.');
+              console.log(
+                'Response is empty, but status 200. Proceeding with logout.'
+              );
             }
-  
-            this.snackBar.open('Account deleted successfully', 'OK', { duration: 2000 });
-  
+
+            this.snackBar.open('Account deleted successfully', 'OK', {
+              duration: 2000,
+            });
+
             // After account is deleted, log out and redirect to welcome/login page
             setTimeout(() => {
               this.logoutAndRedirect();
@@ -226,13 +200,14 @@ export class ProfileViewComponent implements OnInit {
           },
           (error) => {
             console.error('Error deleting account:', error);
-            this.snackBar.open('Error deleting account', 'OK', { duration: 2000 });
+            this.snackBar.open('Error deleting account', 'OK', {
+              duration: 2000,
+            });
           }
         );
       }
     });
   }
-  
 
   // Logout user and redirect to welcome screen
   logoutAndRedirect(): void {
@@ -240,9 +215,12 @@ export class ProfileViewComponent implements OnInit {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('userId');
-  
+
     // Navigate to the welcome/login screen
     this.router.navigate(['/welcome']);
   }
-  
+
+  goToMovieDetails(movieTitle: string): void {
+    this.router.navigate([`/movie-details/${movieTitle}`]);
+  }
 }
