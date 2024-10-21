@@ -150,3 +150,78 @@
     margin-left: auto; /* Pushes the button to the right */
   }
 }
+
+/* MEDIA QUERIES FOR RESPONSIVENESS */
+
+/* Tablet devices (max-width: 768px) */
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column; /* Stack the user info and profile form vertically */
+    padding: 10px;
+
+    .user-info {
+      padding-right: 0;
+      border-right: none; /* Remove the right border on smaller screens */
+      margin-bottom: 20px; /* Add space between sections */
+    }
+
+    .profile-form {
+      padding-left: 0;
+    }
+  }
+
+  .favorite-movie-list {
+    .movies-grid {
+      gap: 10px; /* Reduce spacing between movie cards */
+    }
+
+    .movie-card {
+      max-width: 200px; /* Smaller cards for smaller screens */
+    }
+  }
+
+  .delete-account-container {
+    flex-direction: column; /* Stack the delete text and button vertically */
+    align-items: flex-start;
+
+    .button-container {
+      margin-top: 10px; /* Add some margin on top of the button */
+      width: 100%; /* Make the button container full width */
+      display: flex;
+      justify-content: flex-end; /* Keep the button aligned to the right */
+    }
+  }
+}
+
+/* Mobile devices (max-width: 480px) */
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 5px;
+
+    .user-info,
+    .profile-form {
+      padding: 0;
+    }
+  }
+
+  .favorite-movie-list {
+    .movies-grid {
+      gap: 5px; /* Reduce gap between cards on mobile */
+    }
+
+    .movie-card {
+      max-width: 150px; /* Further reduce movie card size for mobile */
+    }
+  }
+
+  .delete-account-container {
+    h2 {
+      font-size: 18px; /* Reduce heading size */
+    }
+
+    .button-container {
+      width: 100%;
+      justify-content: center; /* Center the button */
+    }
+  }
+}
