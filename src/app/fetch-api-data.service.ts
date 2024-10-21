@@ -36,7 +36,7 @@ export class FetchApiDataService  {
 
 
   public userRegistration(userDetails: any): Observable<any> {
-    console.log(userDetails);
+    // console.log(userDetails);
     return this.http
       .post(apiUrl + 'users', userDetails)
       .pipe(catchError(this.handleError));
@@ -124,16 +124,6 @@ public getFavoriteMovie(username: any, movieId: any): Observable<any> {
   );
 }
 
-// Fetch all favorite movies for a user by username
-// public getUserFavoriteMovies(username: string): Observable<any> {
-//   return this.http.get(`${apiUrl}users/${username}/movies`, {
-//     headers: this.createAuthorizationHeader(),
-//   }).pipe(
-//     catchError(this.handleError) // Handle errors
-//   );
-// }
-
-
 
 
 // Making the API call to get favorite movies for a user by username and movie ID
@@ -150,6 +140,7 @@ public deleteUser(username: string): Observable<any> {
   console.log(`Attempting to delete user with username: ${username}`);
   return this.http.delete(apiUrl + `users/${username}`, {
     headers: this.createAuthorizationHeader(),
+    responseType: 'text'
   }).pipe(
     catchError(this.handleError) // Handle any errors
   );
