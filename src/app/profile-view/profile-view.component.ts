@@ -18,13 +18,13 @@ export class ProfileViewComponent implements OnInit {
   updatedUserInfo: any = {};
   isEditing = false; // Tracks if the user is in edit mode
   userId: string | null = null; // To store the captured userId
-  favoriteMovies: any[] = []; 
+  favoriteMovies: any[] = [];
 
   constructor(
     private fetchApiData: FetchApiDataService,
     private router: Router, // Inject ActivatedRoute to access route params
     private snackBar: MatSnackBar,
-    private dialog: MatDialog 
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -34,61 +34,57 @@ export class ProfileViewComponent implements OnInit {
     }
   }
 
-  
+  getUserInfo(userId: string): void {
+    this.fetchApiData.getUserById(userId).subscribe((user: any) => {
+      this.userInfo = user;
 
+      // Format the date for ngModel in YYYY-MM-DD format
+      this.updatedUserInfo = {
+        ...this.userInfo,
+        birthday: this.formatDateForInput(this.userInfo.birthday),
+      };
 
-getUserInfo(userId: string): void {
-  this.fetchApiData.getUserById(userId).subscribe((user: any) => {
-    this.userInfo = user;
+      console.log(this.userInfo); // To check the fetched user data
 
-    // Format the date for ngModel in YYYY-MM-DD format
-    this.updatedUserInfo = {
-      ...this.userInfo,
-      birthday: this.formatDateForInput(this.userInfo.birthday),
-    };
-
-    console.log(this.userInfo); // To check the fetched user data
-
-    // Fetch favorite movies based on the IDs in userInfo.favorite_movies
-    this.getAllMoviesAndFavorites(user.favorite_movies);
-  });
-}
-
-
-// getFavoriteMovies(movieIds: string[]): void {
-//   this.favoriteMovies = []; 
-//   movieIds.forEach(id => {
-//     this.fetchApiData.getMovie(id).subscribe((movie: any) => {
-//       this.favoriteMovies.push(movie); 
-//       console.log(movie);
-//     }, error => {
-//       console.error('Error fetching favorite movie:', error);
-//     });
-//   });
-// }
-
-getAllMoviesAndFavorites(movieIds: string[]): void {
-  this.favoriteMovies = []; // Reset favorite movies
-
-  // First, fetch all movies
-  this.fetchApiData.getAllMovies().subscribe((allMovies: any[]) => {
-    // Map the movie IDs to their corresponding movies
-    movieIds.forEach(id => {
-      const matchedMovie = allMovies.find(movie => movie._id === id);
-      if (matchedMovie) {
-        this.favoriteMovies.push(matchedMovie); // Add the matched movie to favorites
-        console.log('Matched favorite movie:', matchedMovie);
-      } else {
-        console.error('No movie found for ID:', id);
-      }
+      // Fetch favorite movies based on the IDs in userInfo.favorite_movies
+      this.getAllMoviesAndFavorites(user.favorite_movies);
     });
-  }, error => {
-    console.error('Error fetching all movies:', error);
-  });
-}
+  }
 
+  // getFavoriteMovies(movieIds: string[]): void {
+  //   this.favoriteMovies = [];
+  //   movieIds.forEach(id => {
+  //     this.fetchApiData.getMovie(id).subscribe((movie: any) => {
+  //       this.favoriteMovies.push(movie);
+  //       console.log(movie);
+  //     }, error => {
+  //       console.error('Error fetching favorite movie:', error);
+  //     });
+  //   });
+  // }
 
+  getAllMoviesAndFavorites(movieIds: string[]): void {
+    this.favoriteMovies = []; // Reset favorite movies
 
+    // First, fetch all movies
+    this.fetchApiData.getAllMovies().subscribe(
+      (allMovies: any[]) => {
+        // Map the movie IDs to their corresponding movies
+        movieIds.forEach((id) => {
+          const matchedMovie = allMovies.find((movie) => movie._id === id);
+          if (matchedMovie) {
+            this.favoriteMovies.push(matchedMovie); // Add the matched movie to favorites
+            console.log('Matched favorite movie:', matchedMovie);
+          } else {
+            console.error('No movie found for ID:', id);
+          }
+        });
+      },
+      (error) => {
+        console.error('Error fetching all movies:', error);
+      }
+    );
+  }
 
   //Helper method to format the date for date input field
   formatDateForInput(date: string): string {
@@ -96,7 +92,6 @@ getAllMoviesAndFavorites(movieIds: string[]): void {
     const parsedDate = new Date(date);
     return parsedDate.toISOString().substring(0, 10); // YYYY-MM-DD format for input[type="date"]
   }
-
 
   // Save the updated profile (same as before)
   // saveProfile(): void {
@@ -120,17 +115,23 @@ getAllMoviesAndFavorites(movieIds: string[]): void {
 
   saveProfile(): void {
     if (this.userInfo && this.userInfo.username) {
-      this.fetchApiData.editUser(this.userInfo.username, this.updatedUserInfo).subscribe(
-        (response: any) => {
-          this.snackBar.open('Profile updated successfully', 'OK', { duration: 2000 });
-          // Update displayed user info after successful update
-          this.userInfo = { ...this.updatedUserInfo };
-          this.isEditing = false; // Exit edit mode
-        },
-        (error) => {
-          this.snackBar.open('Error updating profile', 'OK', { duration: 2000 });
-        }
-      );
+      this.fetchApiData
+        .editUser(this.userInfo.username, this.updatedUserInfo)
+        .subscribe(
+          (response: any) => {
+            this.snackBar.open('Profile updated successfully', 'OK', {
+              duration: 2000,
+            });
+            // Update displayed user info after successful update
+            this.userInfo = { ...this.updatedUserInfo };
+            this.isEditing = false; // Exit edit mode
+          },
+          (error) => {
+            this.snackBar.open('Error updating profile', 'OK', {
+              duration: 2000,
+            });
+          }
+        );
     }
   }
   // Toggle edit mode (same as before)
@@ -142,91 +143,105 @@ getAllMoviesAndFavorites(movieIds: string[]): void {
   }
 
   // Check if the movie is in the user's favorite movies list
-isFavorite(movie: any): boolean {
-  return this.userInfo.favorite_movies.includes(movie._id);
-}
-
-
-// Toggle the favorite status of the movie
-toggleFavorite(movie: any): void {
-  const isFav = this.isFavorite(movie);
-
-  // Ensure username is available
-  if (!this.userInfo.username) {
-    console.error('Username not available');
-    return;
+  isFavorite(movie: any): boolean {
+    return this.userInfo.favorite_movies.includes(movie._id);
   }
 
-  // Call the API to add/remove from favorites
-  if (isFav) {
-    // If it's already a favorite, remove it
-    this.fetchApiData.removeFavoriteMovie(this.userInfo.username, movie._id).subscribe(
-      (response: any) => {
-        console.log(`${movie.title} removed from favorites`);
-        // Update local state by removing the movie ID
-        this.userInfo.favorite_movies = this.userInfo.favorite_movies.filter(
-          (id: string) => id !== movie._id
+  // Toggle the favorite status of the movie
+  toggleFavorite(movie: any): void {
+    const isFav = this.isFavorite(movie);
+
+    // Ensure username is available
+    if (!this.userInfo.username) {
+      console.error('Username not available');
+      return;
+    }
+
+    // Call the API to add/remove from favorites
+    if (isFav) {
+      // If it's already a favorite, remove it
+      this.fetchApiData
+        .removeFavoriteMovie(this.userInfo.username, movie._id)
+        .subscribe(
+          (response: any) => {
+            console.log(`${movie.title} removed from favorites`);
+            // Update local state by removing the movie ID
+            this.userInfo.favorite_movies =
+              this.userInfo.favorite_movies.filter(
+                (id: string) => id !== movie._id
+              );
+            // Update the favoriteMovies array
+            this.favoriteMovies = this.favoriteMovies.filter(
+              (favMovie) => favMovie._id !== movie._id
+            );
+          },
+          (error) => {
+            console.error('Error removing favorite movie:', error);
+          }
         );
-        // Update the favoriteMovies array
-        this.favoriteMovies = this.favoriteMovies.filter(
-          (favMovie) => favMovie._id !== movie._id
+    } else {
+      // If it's not a favorite, add it
+      this.fetchApiData
+        .addFavoriteMovie(this.userInfo.username, movie._id)
+        .subscribe(
+          (response: any) => {
+            console.log(`${movie.title} added to favorites`);
+            // Add the movie ID to the local favorite_movies array
+            this.userInfo.favorite_movies.push(movie._id);
+            // Add the movie to the favoriteMovies array
+            this.favoriteMovies.push(movie);
+          },
+          (error) => {
+            console.error('Error adding favorite movie:', error);
+          }
         );
-      },
-      (error) => {
-        console.error('Error removing favorite movie:', error);
-      }
-    );
-  } else {
-    // If it's not a favorite, add it
-    this.fetchApiData.addFavoriteMovie(this.userInfo.username, movie._id).subscribe(
-      (response: any) => {
-        console.log(`${movie.title} added to favorites`);
-        // Add the movie ID to the local favorite_movies array
-        this.userInfo.favorite_movies.push(movie._id);
-        // Add the movie to the favoriteMovies array
-        this.favoriteMovies.push(movie);
-      },
-      (error) => {
-        console.error('Error adding favorite movie:', error);
-      }
-    );
+    }
   }
-}
 
-// Open the confirmation dialog and delete account if confirmed
-deleteAccount(): void {
-  const dialogRef = this.dialog.open(ConfirmDialogComponent);
+  // Open the confirmation dialog and delete account if confirmed
+  deleteAccount(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
 
-  dialogRef.afterClosed().subscribe((result: boolean) => {
+    dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-          console.log('User confirmed deletion. Proceeding to delete account.');
-          this.fetchApiData.deleteUser(this.userInfo.username).subscribe(
-              (response) => {
-                  console.log('Delete account response:', response); // Log the response from the delete operation
-                  this.snackBar.open('Account deleted successfully', 'OK', { duration: 2000 });
-                  this.logoutAndRedirect(); // Logout and redirect user after deletion
-              },
-              (error) => {
-                  console.error('Error deleting account:', error); // Log any errors that occur
-                  this.snackBar.open('Error deleting account: ' + error, 'OK', { duration: 2000 });
-              }
-          );
+        console.log('User confirmed deletion. Proceeding to delete account.');
+        this.fetchApiData.deleteUser(this.userInfo.username).subscribe(
+          (response: any) => {
+            // Assuming a 200 OK response, even if it's empty, proceed to log out and redirect
+            if (response) {
+              console.log('Account deleted successfully:', response);
+            } else {
+              console.log('Response is empty, but status 200. Proceeding with logout.');
+            }
+        
+            this.snackBar.open('Account deleted successfully', 'OK', { duration: 2000 });
+            
+            // After account is deleted, log out and redirect to welcome/login page
+            setTimeout(() => {
+              this.logoutAndRedirect();
+            }, 1000); // 1-second delay before redirecting
+            
+          },
+          (error) => {
+            console.error('Error deleting account:', error);
+            this.snackBar.open('Error deleting account', 'OK', { duration: 2000 });
+          }
+        );
+        
+
       }
-  });
-}
+    });
+  }
 
-
-
-
-
-
-
-// Logout user and redirect to welcome screen
-logoutAndRedirect(): void {
-  localStorage.clear(); // Clear any user data
-  this.router.navigate(['/welcome']); // Redirect to welcome screen
-}
-
-
-
+  // Logout user and redirect to welcome screen
+  logoutAndRedirect(): void {
+    // Clear all local storage (or session storage)
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('userId');
+  
+    // Navigate to the welcome/login screen
+    this.router.navigate(['/welcome']);
+  }
+  
 }
