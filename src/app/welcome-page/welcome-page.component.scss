@@ -1,23 +1,32 @@
 .main-page {
     display: flex;
     flex-direction: column;
-    /* Stack elements vertically */
     justify-content: center;
-    /* Center content vertically (optional, if needed) */
     align-items: center;
-    /* Center content horizontally */
     height: 100vh;
-    /* Ensure it takes up the full height of the page */
 }
+  
+ .logo-container {
+    margin: 20px 0; 
+    width: 100%; 
+    display: flex; 
+    justify-content: center; 
 
-.button-container {
+    img {
+      height: 150px; 
+      width: auto; 
+      max-width: 100%; 
+    }
+  }
+  
+  .button-container {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    /* Adds space between buttons */
-}
-
-div {
-    display: flex;
-    justify-content: center; /* Centers content horizontally */
+    gap: 10px; /* Adds space between buttons */
   }
+  
+  div {
+    display: flex;
+    justify-content: center; 
+  }
+  
