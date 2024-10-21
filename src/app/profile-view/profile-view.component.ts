@@ -201,37 +201,38 @@ export class ProfileViewComponent implements OnInit {
   // Open the confirmation dialog and delete account if confirmed
   deleteAccount(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
-
+  
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         console.log('User confirmed deletion. Proceeding to delete account.');
         this.fetchApiData.deleteUser(this.userInfo.username).subscribe(
           (response: any) => {
-            // Assuming a 200 OK response, even if it's empty, proceed to log out and redirect
-            if (response) {
+            // Log the entire response for debugging purposes
+            console.log('API response:', response);
+  
+            // Check if the response contains meaningful data
+            if (response && Object.keys(response).length > 0) {
               console.log('Account deleted successfully:', response);
             } else {
               console.log('Response is empty, but status 200. Proceeding with logout.');
             }
-        
+  
             this.snackBar.open('Account deleted successfully', 'OK', { duration: 2000 });
-            
+  
             // After account is deleted, log out and redirect to welcome/login page
             setTimeout(() => {
               this.logoutAndRedirect();
             }, 1000); // 1-second delay before redirecting
-            
           },
           (error) => {
             console.error('Error deleting account:', error);
             this.snackBar.open('Error deleting account', 'OK', { duration: 2000 });
           }
         );
-        
-
       }
     });
   }
+  
 
   // Logout user and redirect to welcome screen
   logoutAndRedirect(): void {

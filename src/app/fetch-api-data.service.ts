@@ -183,9 +183,11 @@ public removeFavoriteMovie(username: string | null, movieId: string): Observable
     if (error.error instanceof ErrorEvent) {
       console.error('A client-side or network error occurred:', error.error.message);
     } else {
+      console.log(error);
       console.error(
         `Error Status code ${error.status}, ` +
         `Error body is: ${error.error}`
+        
       );
     }
     // Instead of throwError, return an observable with an error message
