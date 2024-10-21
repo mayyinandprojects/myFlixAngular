@@ -63,18 +63,18 @@
     <div class="image-container">
       <!-- Movie Image -->
       <img [src]="movie?.imageurl || 'assets/placeholder.jpg'" alt="{{ movie?.title }}" />
-
+      <!-- Heart Icon Button -->
+      <button mat-icon-button (click)="toggleFavorite(movie)" class="favorite-icon-pv">
+        <mat-icon [color]="isFavorite(movie) ? 'warn' : 'default'">
+          {{ isFavorite(movie) ? 'favorite' : 'favorite_border' }}
+        </mat-icon>
+      </button>
     </div>
     <!-- Movie Title -->
     <div class="movie-title">
       <mat-card-title>{{ movie?.title }}</mat-card-title>
       
-      <!-- Heart Icon Button -->
-      <button mat-icon-button (click)="toggleFavorite(movie)">
-        <mat-icon [color]="isFavorite(movie) ? 'warn' : 'default'">
-          {{ isFavorite(movie) ? 'favorite' : 'favorite_border' }}
-        </mat-icon>
-      </button>
+      
     </div>
   
     <!-- Movie Director -->
