@@ -59,3 +59,16 @@ mat-card-actions {
   display: flex;
   display: table-row;
 }
+
+@media (max-width: 480px) {
+  .movies-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Set a minimum size for movie cards */
+    justify-content: center; /* Center the grid items horizontally */
+    padding: 10px; 
+  }
+
+  .movie-card {
+    max-width: 200px; /* Reduce card size slightly for smaller screens */
+    margin: 0 auto; /* Center individual cards */
+  }
+}
