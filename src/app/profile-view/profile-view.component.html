@@ -12,21 +12,25 @@
     <h2>Update Profile</h2>
     <form>
       <!-- Name Input -->
+      <label>Name:</label>
       <mat-form-field>
         <input matInput [(ngModel)]="updatedUserInfo.name" name="name" placeholder="{{ userInfo.name }}" [disabled]="!isEditing">
       </mat-form-field>
 
       <!-- Username Input -->
+       <label>Username:</label>
       <mat-form-field>
         <input matInput [(ngModel)]="updatedUserInfo.username" name="username" placeholder="{{ userInfo.username }}" [disabled]="!isEditing">
       </mat-form-field>
 
       <!-- Email Input -->
+      <label>Email:</label>
       <mat-form-field>
         <input matInput [(ngModel)]="updatedUserInfo.email" name="email" placeholder="{{ userInfo.email }}" [disabled]="!isEditing">
       </mat-form-field>
 
       <!-- Birthday Input -->
+      <label>Birthday:</label>
       <mat-form-field>
         <input matInput [(ngModel)]="updatedUserInfo.birthday" name="birthday" placeholder="dd/MM/yyyy" type="date" [disabled]="!isEditing">
       </mat-form-field>
