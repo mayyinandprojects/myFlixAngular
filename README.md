@@ -72,10 +72,10 @@ The application can be deployed using GitHub Pages.
 
 ### Usage
 
-1 Register: Sign up by providing your details.
-2 Login: Use your credentials to log into the app.
-3 Browse Movies: Explore a wide range of movies and view details like genre, director, etc.
-4 Manage Profile: Update your user information, add/remove favorite movies, or delete your account.
+1. Register: Sign up by providing your details.
+2. Login: Use your credentials to log into the app.
+3. Browse Movies: Explore a wide range of movies and view details like genre, director, etc.
+4. Manage Profile: Update your user information, add/remove favorite movies, or delete your account.
 
-License
+### License
 This project is licensed under the MIT License.
