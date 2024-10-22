@@ -2,65 +2,6 @@
 
 Welcome to the **Angular Movie App**, a responsive web application built using Angular. This app allows users to browse movies, register an account, log in, and manage their profile.
 
-## Table of Contents
-
-- [Features](#features)
-- [Technologies](#technologies)
-- [Setup Instructions](#setup-instructions)
-- [Deployment](#deployment)
-- [Usage](#usage)
-- [Screenshots](#screenshots)
-- [License](#license)
-
-## Features
-
-- User Registration and Login.
-- Fetch data from a movie API.
-- Display a list of movies, details about each movie, director, and genre.
-- Add or remove movies from your list of favorites.
-- Update user profile or delete account.
-- Fully responsive design for both desktop and mobile devices.
-
-## Technologies
-
-- **Frontend Framework**: [Angular](https://angular.io/)
-- **UI Components**: [Angular Material](https://material.angular.io/)
-- **CSS Styling**: SCSS
-- **Backend API**: Movie API (built separately)
-- **Deployment**: GitHub Pages
-
-## Setup Instructions
-
-### Prerequisites
-
-Make sure you have the following installed:
-
-- [Node.js](https://nodejs.org/) (v12 or above)
-- [Angular CLI](https://angular.io/cli)
-
-### Clone the Repository
-
-```bash
-git clone https://github.com/<your-username>/<your-repository>.git
-```
-
-### Install Dependencies
-Navigate into the project directory and install the necessary dependencies:
-
-```bash
-cd <your-repository>
-npm install
-```
-
-
-Here’s a README.md template that you can use for your Angular project. Just copy and paste it into your README.md file in VS Code:
-
-markdown
-Copy code
-# My Angular Movie App
-
-Welcome to the **Angular Movie App**, a responsive web application built using Angular. This app allows users to browse movies, register an account, log in, and manage their profile.
-
 Live Link: https://mayyinandprojects.github.io/myFlixAngular/
 
 ## Table of Contents
