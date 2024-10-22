@@ -50,7 +50,6 @@ git clone https://github.com/<your-username>/<your-repository>.git
 Navigate into the project directory and install the necessary dependencies:
 
 ```bash
-Copy code
 cd <your-repository>
 npm install
 ```
@@ -60,7 +59,6 @@ To run the application locally, use the following command:
 
 
 ```bash
-Copy code
 ng serve
 ```
 
