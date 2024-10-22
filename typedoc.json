@@ -1,0 +1,11 @@
+{
+    "entryPoints": ["src/app"],
+    "out": "docs",
+    "includeVersion": true,
+    "exclude": ["**/*.spec.ts"],
+    "excludeExternals": true,
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "theme": "default",
+    "readme": "none"
+  }  
