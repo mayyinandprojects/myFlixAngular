@@ -5,16 +5,30 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service for authenticating user login with bearer token.
+ * Provides methods to check login status and log out.
+ * 
+ * @class AuthService
+ */
 export class AuthService {
   constructor() {}
 
-  // Check if user is logged in by verifying token
+  /**
+   * Checks if the user is logged in by verifying if a token exists in local storage.
+   * 
+   * @returns {boolean} True if the token exists, otherwise false.
+   */
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token'); // Returns true if token exists
   }
 
-  // Log out the user
+  /**
+   * Logs out the user by removing the token from local storage.
+   * This effectively ends the user's session.
+   */
   logout(): void {
     localStorage.removeItem('token');
   }
 }
+

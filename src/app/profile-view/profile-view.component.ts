@@ -3,30 +3,53 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'; // To capture route params
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { formatDate } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router'; // For navigation
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component'; // Import dialog
 
+/**
+ * Component to display and edit user profile information.
+ * 
+ * @class ProfileViewComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-profile-view',
   templateUrl: './profile-view.component.html',
   styleUrls: ['./profile-view.component.scss'],
 })
 export class ProfileViewComponent implements OnInit {
+  /** User information retrieved from the API. */
   userInfo: any = {};
+  
+  /** User information for editing. */
   updatedUserInfo: any = {};
-  isEditing = false; // Tracks if the user is in edit mode
-  userId: string | null = null; // To store the captured userId
+  
+  /** Indicates if the user is currently editing their profile. */
+  isEditing = false;
+  
+  /** ID of the user being viewed/edited. */
+  userId: string | null = null;
+  
+  /** List of user's favorite movies. */
   favoriteMovies: any[] = [];
 
+  /**
+   * Creates an instance of ProfileViewComponent.
+   * 
+   * @param {FetchApiDataService} fetchApiData - Service to fetch user and movie data.
+   * @param {Router} router - Service for navigation.
+   * @param {MatSnackBar} snackBar - Service for displaying notifications.
+   * @param {MatDialog} dialog - Service for opening dialog windows.
+   */
   constructor(
     private fetchApiData: FetchApiDataService,
-    private router: Router, // Inject ActivatedRoute to access route params
+    private router: Router,
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {}
 
+  /** Lifecycle hook that is called after data-bound properties are initialized. */
   ngOnInit(): void {
     const userId = localStorage.getItem('userId');
     if (userId) {
@@ -34,6 +57,11 @@ export class ProfileViewComponent implements OnInit {
     }
   }
 
+  /**
+   * Fetches user information by user ID.
+   * 
+   * @param {string} userId - ID of the user to fetch information for.
+   */
   getUserInfo(userId: string): void {
     this.fetchApiData.getUserById(userId).subscribe((user: any) => {
       this.userInfo = user;
@@ -51,7 +79,11 @@ export class ProfileViewComponent implements OnInit {
     });
   }
 
-
+  /**
+   * Retrieves all movies and populates the user's favorite movies list.
+   * 
+   * @param {string[]} movieIds - Array of favorite movie IDs.
+   */
   getAllMoviesAndFavorites(movieIds: string[]): void {
     this.favoriteMovies = []; // Reset favorite movies
 
@@ -75,14 +107,23 @@ export class ProfileViewComponent implements OnInit {
     );
   }
 
-  //Helper method to format the date for date input field
+  /**
+   * Helper method to format the date for the date input field.
+   * 
+   * @param {string} date - The date string to format.
+   * @returns {string} The formatted date string in YYYY-MM-DD format.
+   */
   formatDateForInput(date: string): string {
     if (!date) return '';
     const parsedDate = new Date(date);
     return parsedDate.toISOString().substring(0, 10); // YYYY-MM-DD format for input[type="date"]
   }
 
-
+  /**
+   * Saves the updated profile information.
+   * 
+   * This function sends updated user info to the backend and updates the local state.
+   */
   saveProfile(): void {
     if (this.userInfo && this.userInfo.username) {
       this.fetchApiData
@@ -104,7 +145,11 @@ export class ProfileViewComponent implements OnInit {
         );
     }
   }
-  // Toggle edit mode (same as before)
+
+  /**
+   * Toggles edit mode for the profile.
+   * If exiting edit mode, resets the updated user info.
+   */
   toggleEdit(): void {
     this.isEditing = !this.isEditing;
     if (!this.isEditing) {
@@ -112,12 +157,21 @@ export class ProfileViewComponent implements OnInit {
     }
   }
 
-  // Check if the movie is in the user's favorite movies list
+  /**
+   * Checks if a movie is in the user's favorite movies list.
+   * 
+   * @param {any} movie - The movie object to check.
+   * @returns {boolean} True if the movie is a favorite, otherwise false.
+   */
   isFavorite(movie: any): boolean {
     return this.userInfo.favorite_movies.includes(movie._id);
   }
 
-  // Toggle the favorite status of the movie
+  /**
+   * Toggles the favorite status of a movie.
+   * 
+   * @param {any} movie - The movie object to toggle.
+   */
   toggleFavorite(movie: any): void {
     const isFav = this.isFavorite(movie);
 
@@ -168,7 +222,10 @@ export class ProfileViewComponent implements OnInit {
     }
   }
 
-  // Open the confirmation dialog and delete account if confirmed
+  /**
+   * Opens a confirmation dialog to delete the user account.
+   * If confirmed, deletes the user account and logs out.
+   */
   deleteAccount(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
 
@@ -209,7 +266,9 @@ export class ProfileViewComponent implements OnInit {
     });
   }
 
-  // Logout user and redirect to welcome screen
+  /**
+   * Logs out the user and redirects to the welcome screen.
+   */
   logoutAndRedirect(): void {
     // Clear all local storage (or session storage)
     localStorage.removeItem('token');
@@ -220,6 +279,11 @@ export class ProfileViewComponent implements OnInit {
     this.router.navigate(['/welcome']);
   }
 
+  /**
+   * Navigates to the movie details page for a given movie title.
+   * 
+   * @param {string} movieTitle - The title of the movie to navigate to.
+   */
   goToMovieDetails(movieTitle: string): void {
     this.router.navigate([`/movie-details/${movieTitle}`]);
   }
