@@ -1,3 +1,4 @@
+// src\app\app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
@@ -19,7 +20,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes{
+    useHash: true //add hash strategy which can help prevent 404 errors on page refresh when deployed to GitHub Pages
+  })
+],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
