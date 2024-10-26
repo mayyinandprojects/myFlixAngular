@@ -1,5 +1,5 @@
 {
-  "entryPoints": ["src/app"],
+  "entryPoints": ["src/index.html"],
   "out": "docs",
   "name": "MyFlix Angular Documentation",
   "includeVersion": true,
@@ -8,6 +8,5 @@
   "excludePrivate": true,
   "excludeProtected": true,
   "theme": "default",
-  "readme": "README.md",
-  "plugin": ["@typedoc/plugin-markdown"]
+  "readme": "README.md"
 }
