@@ -1,11 +1,14 @@
 {
-    "entryPoints": ["src/app"],
-    "out": "docs",
-    "includeVersion": true,
-    "exclude": ["**/*.spec.ts"],
-    "excludeExternals": true,
-    "excludePrivate": true,
-    "excludeProtected": true,
-    "theme": "default",
-    "readme": "none"
-  }  
+  "entryPoints": ["src/app"],
+  "out": "docs",
+  "name": "MyFlix Angular Documentation",
+  "includeVersion": true,
+  "exclude": ["**/*.spec.ts", "**/node_modules/**"],  
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "theme": "default",
+  "readme": "README.md",
+  "plugin": ["@typedoc/plugin-markdown"],  
+  "includeCurrentPage": true  //improves navigation
+}

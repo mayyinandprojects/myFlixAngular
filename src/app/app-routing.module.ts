@@ -20,7 +20,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes{
+  imports: [RouterModule.forRoot(routes,{
     useHash: true //add hash strategy which can help prevent 404 errors on page refresh when deployed to GitHub Pages
   })
 ],
