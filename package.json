@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test", 
+    "test": "ng test",
     "docs": "typedoc --out docs/ src/"
   },
   "private": true,
@@ -38,6 +38,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typedoc": "^0.26.10",
+    "typedoc-plugin-markdown": "^4.2.9",
     "typescript": "~5.1.6"
   }
 }

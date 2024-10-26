@@ -9,6 +9,5 @@
   "excludeProtected": true,
   "theme": "default",
   "readme": "README.md",
-  "plugin": ["@typedoc/plugin-markdown"],  
-  "includeCurrentPage": true  //improves navigation
+  "plugin": ["@typedoc/plugin-markdown"]
 }
